@@ -17,3 +17,6 @@ using
 
 add garia2c to /usr/bin or submit a PR for a better more-gentoo installation.
 
+run `mirrorselect -Hs 4` to get at least 4 mirrors
+
+cleanup PR's welcome!  I'm surprised it works, but it works especially well for emerge-webrsync.  
