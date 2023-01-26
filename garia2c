@@ -1,5 +1,7 @@
 #!/bin/bash
-set -x -v
+
+#uncomment for debugging
+#set -x -v
 PARMS=( $@ )
 DISTDIR=${PARMS[0]}
 FILE=${PARMS[1]}
