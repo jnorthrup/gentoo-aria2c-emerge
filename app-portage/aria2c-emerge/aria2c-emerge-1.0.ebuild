@@ -5,7 +5,7 @@ EAPI=8
 
 DESCRIPTION="Portage utility script: aria2c fetch client for Gentoo"
 HOMEPAGE="https://github.com/jnorthrup/gentoo-aria2c-emerge"
-SRC_URI="https://raw.githubusercontent.com/jnorthrup/gentoo-aria2c-emerge/v${PV}/garia2c -> garia2c"
+SRC_URI="https://raw.githubusercontent.com/jnorthrup/gentoo-aria2c-emerge/v${PV}/garia2c.bash -> garia2c.bash"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -17,23 +17,29 @@ DEPEND="
   mirrorselect? ( app-portage/mirrorselect )
 "
 
+src_unpack() {
+  default
+  # Make sure the script is executable
+  chmod +x "${S}/garia2c.bash"
+}
 
 src_install() {
   exeinto "/usr/share/portage"
-  doexe "garia2c"
+  doexe "garia2c.bash"
 
   # Add/update FETCHCOMMAND and RESUMECOMMAND in /etc/make.conf
   if use makeconf-modification; then
-    #create a date comment and explanation for the modification
+    # Create a date comment and explanation for the modification
     DATE=$(date +%Y-%m-%d)
 
     cat <<-EOF >> "${D}/etc/make.conf"
     # ${DATE} - ${PN} - ${DESCRIPTION}
-	FETCHCOMMAND="/usr/share/portage/garia2c \"\${DISTDIR}\" \"\${FILE}\" \"\${URI}\" \$GENTOO_MIRRORS"
+	FETCHCOMMAND="/usr/share/portage/garia2c.bash \"\${DISTDIR}\" \"\${FILE}\" \"\${URI}\" \$GENTOO_MIRRORS"
 	RESUMECOMMAND=\$FETCHCOMMAND
 	EOF
   fi
 }
+
 pkg_preinst() {
   if use mirrorselect && has_version 'app-portage/mirrorselect'; then
     elog "The 'mirrorselect' USE flag is enabled, and 'app-portage/mirrorselect' package is installed."
@@ -60,7 +66,7 @@ pkg_preinst() {
     ewarn "The 'makeconf-modification' USE flag is currently disabled."
     ewarn "To modify /etc/make.conf manually, run the following command as root:"
     ewarn "cat <<-EOF >> /etc/make.conf"
-    ewarn "FETCHCOMMAND=\"/usr/share/portage/garia2c \\\"\${DISTDIR}\\\" \\\"\${FILE}\\\" \\\"\${URI}\\\" \\\$GENTOO_MIRRORS\""
+    ewarn "FETCHCOMMAND=\"/usr/share/portage/garia2c.bash \\\"\${DISTDIR}\\\" \\\"\${FILE}\\\" \\\"\${URI}\\\" \\\$GENTOO_MIRRORS\""
     ewarn "RESUMECOMMAND=\\\$FETCHCOMMAND"
     ewarn "EOF"
   fi
@@ -72,10 +78,14 @@ pkg_pretend() {
     ewarn "This will modify the FETCHCOMMAND and RESUMECOMMAND variables in /etc/make.conf."
     ewarn "Please note that modifying these variables may cause unintended emerge interruptions."
     ewarn ""
-    ewarn "To revert the changes, append the following empty variables at the end of /etc/make.conf:"
-    ewarn "FETCHCOMMAND="
-    ewarn "RESUMECOMMAND="
-    ewarn ""
-    ewarn 'Example command: echo -e  {RESUME,FETCH}COMMAND=\"\"\\n >>/etc/make.conf'
+    ewarn "To revert the changes, run the following command as root:"
+    ewarn "grep '(FETCH|RESUME)COMMAND=' /usr/share/portage/config/make.globals >>/etc/make.conf"
+  fi
+}
+
+pkg_postrm() {
+  # Remove FETCHCOMMAND and RESUMECOMMAND from /etc/make.conf
+  if use makeconf-modification && [[ -f "${ROOT}/etc/make.conf" ]]; then
+  grep '(FETCH|RESUME)COMMAND=' /usr/share/portage/config/make.globals >>/etc/make.conf || die "Failed to revert FETCHCOMMAND and RESUMECOMMAND from make.conf"
   fi
 }
