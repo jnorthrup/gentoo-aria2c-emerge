@@ -1,7 +1,25 @@
 #!/bin/bash
 
 set -x
+#if no params passed in show help and exit
+if [ $# -eq 0 ]; then
+  cat <<-EOF
+
+  Install make.conf mod to use aria2c for distfiles:
+  $0 install
+
+   Normal Usage: $0 DISTDIR FILE URI [MIRRORS...]
+   EOF
+  exit 1
+fi
+
 DISTDIR="$1"
+#if DISTDIR is "install" then run the make.conf mod
+cat <<-EOF >> /etc/make.conf
+FETCHCOMMAND='"/usr/share/portage/garia2c.bash \${DISTDIR} \${FILE} \${URI}"'
+RESUMECOMMAND='\$FETCHCOMMAND'
+EOF
+
 FILE="$2"
 # Determine an idempotent temp file
 : tempdir is ${TMPDIR:=/tmp}
