@@ -18,14 +18,15 @@ fi
 #if DISTDIR is "install" then run the make.conf mod
 if [ "$DISTDIR" = "install" ]; then
 
-cat <<-EOF >>/etc/make.conf
-FETCHCOMMAND="$0 \\\${DISTDIR} \\\${FILE} \\\${URI} \\\$GENTOO_MIRRORS"
-RESUMECOMMAND=\$FETCHCOMMAND
+  cat <<-EOF >>/etc/make.conf
+  FETCHCOMMAND="$0 \\\${DISTDIR} \\\${FILE} \\\${URI} \\\$GENTOO_MIRRORS"
+  RESUMECOMMAND=\$FETCHCOMMAND
 EOF
   exit 1
 fi
 if [ "$DISTDIR" = "remove" ] ; then
       sed -i -e '/FETCHCOMMAND/d' -e '/RESUMECOMMAND/d' "${ROOT}/etc/make.conf" || die "Failed to remove FETCHCOMMAND and RESUMECOMMAND from make.conf" 
+      exit 1
 fi
 
 set -x
