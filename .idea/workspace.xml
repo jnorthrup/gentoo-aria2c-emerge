@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="21d42e75-a52d-4dc7-afd8-7b212eb8e4aa" name="Changes" comment="tedium">
+      <change beforePath="$PROJECT_DIR$/app-portage/aria2c-emerge/Manifest" beforeDir="false" afterPath="$PROJECT_DIR$/app-portage/aria2c-emerge/Manifest" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-portage/aria2c-emerge/aria2c-emerge-1.0.ebuild" beforeDir="false" afterPath="$PROJECT_DIR$/app-portage/aria2c-emerge/aria2c-emerge-1.0.ebuild" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2S5KbnVALHGiANPnrBkmleoFTXm" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="showExcludedFiles" value="false" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/home/jim/work/gentoo-garia2c",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="fixed the pecuilar zero index repeats.  gentoo appears to manually attempt to fetch from each individual mirror in series.  the outcome of this script is designed for the first run, all the mirrors, however will happily blunderbuss n-1 * mirrors.length attempts in terminal failure conditions" />
+    <MESSAGE value="since the outer process calls this script once per incomplete attempt assuming the mirrors are done one at a time, we make the script idempotent once, and let it keep calling, assuming it will just error out once per mirror at this point" />
+    <MESSAGE value="readme" />
+    <MESSAGE value="running locally as localstuff, checking that crap in." />
+    <MESSAGE value="tedium" />
+    <option name="LAST_COMMIT_MESSAGE" value="tedium" />
+  </component>
+</project>
