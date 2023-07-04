@@ -6,6 +6,10 @@ if [ -z "$DISTDIR" ]; then
 cat <<-EOF
 Install make.conf mod to use aria2c for distfiles:
 $0 install
+
+Remove the script: 
+$0 remove
+
 Normal Usage: $0 DISTDIR FILE URI [MIRRORS...]
 EOF
 exit 1
@@ -19,6 +23,9 @@ FETCHCOMMAND="$0 \\\${DISTDIR} \\\${FILE} \\\${URI} \\\$GENTOO_MIRRORS"
 RESUMECOMMAND=\$FETCHCOMMAND
 EOF
   exit 1
+fi
+if [ "$DISTDIR" = "remove" ] ; then
+      sed -i -e '/FETCHCOMMAND/d' -e '/RESUMECOMMAND/d' "${ROOT}/etc/make.conf" || die "Failed to remove FETCHCOMMAND and RESUMECOMMAND from make.conf" 
 fi
 
 set -x
