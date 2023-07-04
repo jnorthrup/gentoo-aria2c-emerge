@@ -15,7 +15,7 @@ fi
 if [ "$DISTDIR" = "install" ]; then
 
 cat <<-EOF >>/etc/make.conf
-FETCHCOMMAND="/usr/share/portage/garia2c.bash \\\${DISTDIR} \\\${FILE} \\\${URI} \\\$GENTOO_MIRRORS"
+FETCHCOMMAND="$0 \\\${DISTDIR} \\\${FILE} \\\${URI} \\\$GENTOO_MIRRORS"
 RESUMECOMMAND=\$FETCHCOMMAND
 EOF
   exit 1
