@@ -1,20 +1,15 @@
 # aria2c for gentoo
 
-enablement:
+run 16 sockets on any and all gentoo mirrors at once, because sometimes you just fucking live in asia.
 
-using your mouse, paste this AS ROOT USER
+##enablement:
 
+the first thing you need is mirrors.  1 is a minimum.
 
-```
-cat >>/etc/make.conf <<EOF
-FETCHCOMMAND="bash /usr/bin/garia2c \"\${DISTDIR}\" \"\${FILE}\" \"\${URI}\" $GENTOO_MIRRORS "
-RESUMECOMMAND=$FETCHCOMMAND
-GENTOO_MIRRORS="ftp://ftp.free.fr/mirrors/ftp.gentoo.org/ https://mirror.aarnet.edu.au/pub/gentoo/ http://ftp.fau.de/gentoo ftp://ftp-stud.hs-esslingen.de/pub/Mirrors/gentoo/ ftp://gentoo.bloodhost.ru/ http://gentoo.mirrors.tds.net/gentoo https://ftp.agdsn.de/gentoo http://ftp.ntua.gr/pub/linux/gentoo/"
-EOF
-```
+mirrorselect -i 
 
-add garia2c from this repo to /usr/bin or submit a PR for a better more-gentoo installation.
+## install
+there is an ebuild.  any help with that is greatly appreciated.  
 
-run `mirrorselect -Hs 4` to get at least 4 mirrors
+once you have the script, run garia2c.bash install as root, of course.  
 
-cleanup PR's welcome!  I'm surprised it works, but it works especially well for emerge-webrsync.  
