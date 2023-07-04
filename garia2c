@@ -1,17 +1,30 @@
 #!/bin/bash
 
-#uncomment for debugging
-#set -x -v
-PARMS=( $@ )
-DISTDIR=${PARMS[0]}
-FILE=${PARMS[1]}
-URI=${PARMS[2]}
-
+set -x
+DISTDIR="$1"
+FILE="$2"
+URI="$3"
 shift 3
-echo $@
-GENTOO_MIRRORS=$@
-m=( $(echo ${GENTOO_MIRRORS//\//_slash_}) )
-URI1=${URI//\//_slash_}
-pushd $DISTDIR
-CMMMD="aria2c -c -j 15 -s 15 -x 15   --remote-time   --http-accept-gzip -d $DISTDIR  -o $FILE ${URI} ${URI1/${m[0]}/${m[1]}} ${URI1/${m[0]}/${m[2]}} ${URI1/${m[0]}/${m[3]}} ${URI1/${m[0]}/${m[4]}}"
-eval ${CMMMD//_slash_/\/}
+
+# the mirrors: $@
+MIRRORS=( $@ )
+
+pushd "$DISTDIR"
+
+# start building the aria2c command
+CMD="aria2c -c -j 15 -s 15 -x 15 --remote-time --http-accept-gzip --uri-selector=adaptive  -d $DISTDIR -o $FILE"
+CMD=( $CMD )
+
+# get the first mirror
+FIRST_MIRROR=${MIRRORS[0]}
+
+# for each mirror starting from index 1
+for ((i=1; i<${#MIRRORS[@]}; i++)); do
+    # replace the first mirror in the URI with the current mirror
+    MIRROR_URI=$(echo "$URI" | sed "s#$FIRST_MIRROR#${MIRRORS[$i]}#g")
+    # add the mirror URI to the command
+    CMD+=("$MIRROR_URI")
+done
+
+# execute the aria2c command
+"${CMD[@]}"
